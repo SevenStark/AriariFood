@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ariari Food #Somos Potencia</title>
+  <link rel="icon" href="assets/images/icon.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo" onclick="filterByCategory('todas'); document.getElementById('searchInput').value=''; searchProducts('');">
+        <div class="icon">
+          <img src="assets/images/icon.png" alt="icon">
+        </div>
+        <div>
+          Ariari Food
+          <span>#Somos Ariari, somos potencia</span>
+        </div>
+      </div>  
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar productos..."> <!--browser of the products -->
+      </div>
+
+      <div class="header-actions">
+        <button class="header-btn mobile-search-toggle" onclick="document.getElementById('mobileSearch').style.display=document.getElementById('mobileSearch').style.display==='block'?'none':'block';document.getElementById('searchInputMobile').focus()" aria-label="Buscar">
+          🔍
+        </button>
+        <button class="header-btn" onclick="openCart()" aria-label="Carrito">
+          🛒
+          <span class="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-search" id="mobileSearch">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInputMobile" placeholder="Buscar productos...">
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <h1>Productos frescos del ARIARI</h1>
+        <p>Directo del campo a tu mesa. Los mejores frutos, carnes y víveres de la región del Ariari con la calidad que mereces.</p>
+        <button class="hero-btn" onclick="document.getElementById('productsSection').scrollIntoView({behavior:'smooth'})">
+          Ver productos →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <main class="main" id="productsSection">
+    <!-- Categories -->
+    <section class="categories">
+      <h2 class="section-title">Categorías</h2>
+      <div class="category-pills" id="categoryPills"></div>
+    </section>
+
+    <!-- Products -->
+    <section>
+      <div class="products-header">
+        <h2 class="section-title" style="margin-bottom:0;">Productos</h2>
+        <span class="products-count" id="productsCount"></span>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">🥑 Ariari Food</div>
+      <div class="footer-links">
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Contacto</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div style="font-size:0.85rem;">© 2026 Ariari Food. Todos los derechos reservados.</div>
+    </div>
+  </footer>
+
+  <!-- Cart Overlay -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- Cart Sidebar -->
+  <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>🛒 Tu Carrito</h2>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <strong>Total:</strong>
+        <span class="total-price" id="cartTotal">$0</span>
+      </div>
+      <button class="checkout-btn" onclick="openCheckout()">Proceder al pago</button>
+    </div>
+  </aside>
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" style="position:relative;">
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <img class="modal-img" id="modal" src="" alt="">
+      <div class="modal-body">
+        <div class="product-category" id="modalCategory"></div>
+        <h2 id="modalName"></h2>
+        <div class="modal-price" id="modalPrice"></div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div style="font-size:0.85rem;color:var(--gray);margin-bottom:1rem;" id="modalStock"></div>
+        <div class="modal-actions">
+          <div class="modal-qty">
+            <button onclick="modalQtyChange(-1)">−</button>
+            <span id="modalQtyValue">1</span>
+            <button onclick="modalQtyChange(1)">+</button>
+          </div>
+          <button class="modal-add-btn" onclick="modalAddToCart()">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal checkout-modal">
+      <button class="modal-close-btn" onclick="closeCheckout()">✕</button>
+      <h2>📋 Confirmar Pedido</h2>
+      <p style="text-align:center;color:var(--gray);margin-bottom:1.5rem;">
+        Total a pagar: <strong style="color:var(--primary);font-size:1.3rem;" id="checkoutTotal"></strong>
+      </p>
+      <form onsubmit="submitOrder(event)">
+        <div class="form-group">
+          <label for="nombre">Nombre completo *</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Teléfono *</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="300 123 4567" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="direccion">Dirección de entrega *</label>
+          <input type="text" id="direccion" name="direccion" placeholder="Calle 123 #45-67, Barrio" required>
+        </div>
+        <div class="form-group">
+          <label for="notas">Notas adicionales</label>
+          <textarea id="notas" name="notas" placeholder="Ej: Dejar en la portería, horario de entrega..."></textarea>
+        </div>
+        <button type="submit" class="submit-order-btn">Confirmar Pedido</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- FAB Cart (mobile) -->
+  <button class="fab-cart" onclick="openCart()" aria-label="Carrito">
+    🛒
+    <span class="cart-badge">0</span>
+  </button>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
