@@ -5,47 +5,27 @@ E-commerce de productos frescos del Llano, pensado para llevar lo mejor de la re
 
 ## ✨ Características
 
-- 🛍️ Catálogo de productos con 16 artículos en 6 categorías
+- 🛍️ Catálogo de productos 
 - 🔍 Búsqueda en tiempo real
 - 🏷️ Filtros por categoría
-- 🛒 Carrito de compras con persistencia (localStorage)
+- 🛒 Carrito de compras con persistencia 
 - 📋 Modal de detalle de producto
 - 📝 Formulario de pedido
 - 📱 Diseño responsive (mobile-first)
-- 🎨 Paleta de colores "Campos Verdes"
+- 🎨 Paleta de colores 
 
 ## 🛠️ Tecnologías
 
 - HTML5
-- CSS3 (vanilla)
-- JavaScript (vanilla)
+- CSS3 
+- JavaScript 
 - Sin dependencias externas
 
 ## 🚀 Cómo usar
 
-Abrí `index.html` en tu navegador o serví la carpeta con un servidor local:
+URL: https://sevenstark.github.io/AriariFood/
 
-```bash
-# Con Python
-python3 -m http.server 8000
-
-# Con Node.js
-npx serve .
-```
-
-## 📁 Estructura
-
-```
-├── index.html
-├── css/
-│   └── style.css
-├── js/
-│   ├── data.js
-│   └── app.js
-└── assets/
-    └── images/
-```
 
 ## 📄 Licencia
 
-MIT
+No license
